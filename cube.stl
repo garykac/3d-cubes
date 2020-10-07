@@ -1,0 +1,126 @@
+;; cube.stl
+;; Import into Blender with Y-forward, Z-up
+;;
+;; Vertices:                        Faces:
+;;      f-------g                          +-------+ 
+;;     /.      /|                         /.  5   /|  3 back
+;;    / .     / |                        / .     / |
+;;   e-------h  |                   2   +-------+ 1|
+;;   |  b . .|. c      z          right |  . . .|. +
+;;   | .     | /       | /y             | . 4   | /
+;;   |.      |/        |/               |.      |/
+;;   a-------d         +---- x          +-------+
+;;                                           6
+;;                                        bottom
+
+solid
+
+;; Face 1: cghd = cgh + chd
+;; cgh
+facet normal 1.0 0.0 0.0
+   outer loop
+      vertex 1.0 1.0 0.0
+      vertex 1.0 1.0 1.0
+      vertex 1.0 0.0 1.0
+   endloop
+end facet
+;; chd
+facet normal 1.0 0.0 0.0
+   outer loop
+      vertex 1.0 1.0 0.0
+      vertex 1.0 0.0 1.0
+      vertex 1.0 0.0 0.0
+   endloop
+end facet
+
+;; Face 2: aefb = aef + afb
+;; aef
+facet normal -1.0 0.0 0.0
+   outer loop
+      vertex 0.0 0.0 0.0
+      vertex 0.0 0.0 1.0
+      vertex 0.0 1.0 1.0
+   endloop
+end facet
+;; afb
+facet normal -1.0 0.0 0.0
+   outer loop
+      vertex 0.0 0.0 0.0
+      vertex 0.0 1.0 1.0
+      vertex 0.0 1.0 0.0
+   endloop
+end facet
+
+;; Face 3: gcbf = gcb + gbf
+;; gcb
+facet normal 0.0 1.0 0.0
+   outer loop
+      vertex 1.0 1.0 1.0
+      vertex 1.0 1.0 0.0
+      vertex 0.0 1.0 0.0
+   endloop
+end facet
+;; gbf
+facet normal 0.0 1.0 0.0
+   outer loop
+      vertex 1.0 1.0 1.0
+      vertex 0.0 1.0 0.0
+      vertex 0.0 1.0 1.0
+   endloop
+end facet
+
+;; Face 4: dhea = dhe + dea
+;; dhe
+facet normal 0.0 -1.0 0.0
+   outer loop
+      vertex 1.0 0.0 0.0
+      vertex 1.0 0.0 1.0
+      vertex 0.0 0.0 1.0
+   endloop
+end facet
+;; dea
+facet normal 0.0 -1.0 0.0
+   outer loop
+      vertex 1.0 0.0 0.0
+      vertex 0.0 0.0 1.0
+      vertex 0.0 0.0 0.0
+   endloop
+end facet
+
+;; Face 5: hgfe = hgf + hfe
+;; hgf
+facet normal 0.0 0.0 1.0
+   outer loop
+      vertex 1.0 0.0 1.0
+      vertex 1.0 1.0 1.0
+      vertex 0.0 1.0 1.0
+   endloop
+end facet
+;; hfe
+facet normal 0.0 0.0 1.0
+   outer loop
+      vertex 1.0 0.0 1.0
+      vertex 0.0 1.0 1.0
+      vertex 0.0 0.0 1.0
+   endloop
+end facet
+
+;; Face 6: cdab = cda + cab
+;; cda
+facet normal 0.0 0.0 -1.0
+   outer loop
+      vertex 1.0 1.0 0.0
+      vertex 1.0 0.0 0.0
+      vertex 0.0 0.0 0.0
+   endloop
+end facet
+;; cab
+facet normal 0.0 0.0 -1.0
+   outer loop
+      vertex 1.0 1.0 0.0
+      vertex 0.0 0.0 0.0
+      vertex 0.0 1.0 0.0
+   endloop
+end facet
+
+endsolid

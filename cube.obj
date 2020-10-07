@@ -1,0 +1,98 @@
+# cube.obj
+# Import into Blender with Y-forward, Z-up
+#
+# Vertices:                        Faces:
+#      f-------g                          +-------+ 
+#     /.      /|                         /.  5   /|  3 back
+#    / .     / |                        / .     / |
+#   e-------h  |                   2   +-------+ 1|
+#   |  b . .|. c      z          right |  . . .|. +
+#   | .     | /       | /y             | . 4   | /
+#   |.      |/        |/               |.      |/
+#   a-------d         +---- x          +-------+
+#                                           6
+#                                        bottom
+
+# Material defined in separate file.
+mtllib cube.mtl
+
+g cube
+
+# Vertices
+v 0.0 0.0 0.0  # 1 a
+v 0.0 1.0 0.0  # 2 b
+v 1.0 1.0 0.0  # 3 c
+v 1.0 0.0 0.0  # 4 d
+v 0.0 0.0 1.0  # 5 e
+v 0.0 1.0 1.0  # 6 f
+v 1.0 1.0 1.0  # 7 g
+v 1.0 0.0 1.0  # 8 h
+
+# Normal vectors
+# One for each face. Shared by all vertices in that face.
+vn  1.0  0.0  0.0  # 1 cghd
+vn -1.0  0.0  0.0  # 2 aefb
+vn  0.0  1.0  0.0  # 3 gcbf
+vn  0.0 -1.0  0.0  # 4 dhea
+vn  0.0  0.0  1.0  # 5 hgfe
+vn  0.0  0.0 -1.0  # 6 cdab
+
+# Texture
+# (u,v) coordinate into texture map image, ranging from 0.0 - 1.0.
+#  +---f---g---+---+
+#  |   | 5 |   |   |
+#  f---e---h---g---+
+#  | 2 | 4 | 1 |   |     v
+#  b---a---d---c---+     |
+#  |   | 6 |   |   |     |
+#  +---b---c---+---+     +---- u
+#  |   | 3 |   |   |
+#  +---f---g---+---+
+vt 0.25 1.00  # 1 f(5) = f for face 5
+vt 0.50 1.00  # 2 g(5)
+vt 0    0.75  # 3 f(2)
+vt 0.25 0.75  # 4 e(2,4,5)
+vt 0.50 0.75  # 5 h(1,4,5)
+vt 0.75 0.75  # 6 g(1)
+vt 0    0.50  # 7 b(2)
+vt 0.25 0.50  # 8 a(2,4,6)
+vt 0.50 0.50  # 9 d(1,4,6)
+vt 0.75 0.50  # 10 c(1)
+vt 0.25 0.25  # 11 b(3,6)
+vt 0.50 0.25  # 12 c(3,6)
+vt 0.25 0     # 13 f(3)
+vt 0.50 0     # 14 g(3)
+
+# Define material for the following faces
+usemtl texture
+
+# Faces v/vt/vn
+#   3-------2
+#   | -     |
+#   |   #   |  Each face = 2 triangles (ccw)
+#   |     - |            = 1-2-3 + 1-3-4
+#   4-------1
+
+# Face 1: cghd = cgh + chd
+f 3/10/1 7/6/1 8/5/1
+f 3/10/1 8/5/1 4/9/1
+
+# Face 2: aefb = aef + afb
+f 1/8/2 5/4/2 6/3/2
+f 1/8/2 6/3/2 2/7/2
+
+# Face 3: gcbf = gcb + gbf
+f 7/14/3 3/12/3 2/11/3
+f 7/14/3 2/11/3 6/13/3
+
+# Face 4: dhea = dhe + dea
+f 4/9/4 8/5/4 5/4/4
+f 4/9/4 5/4/4 1/8/4
+
+# Face 5: hgfe = hgf + hfe
+f 8/5/5 7/2/5 6/1/5
+f 8/5/5 6/1/5 5/4/5
+
+# Face 6: cdab = cda + cab
+f 3/12/6 4/9/6 1/8/6
+f 3/12/6 1/8/6 2/11/6

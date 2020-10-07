@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+
+<!--
+   This file describes a scene with a single cube.
+
+   The vertex, normal, and uv data arrays are all the same length so that
+   they can be indexed simultaneously.
+
+   Here is a rough outline of its structure:
+
+   image "texturePNG"
+     init_from "cube-tex.png"
+   
+   effect "effectTexture"
+     surface "textureSurface"
+       init_from "texturePNG"
+     sampler2D "textureSampler"
+       source "textureSurface"
+     texture "textureSurface"
+   
+   material "matTexture"
+     instance_effect "effectTexture"
+   
+   geometry "cubeGeometry"
+     mesh
+       source "cubeVerticesSource"
+         float_array "cubeVerticesData": 24x (x,y,z) = 72
+       source "cubeNormalsSource"
+         float_array "cubeNormalsData": 24x (x,y,z) = 72
+       source "cubeTextureUVsSource"
+         float_array "cubeTextureUVsData": 24x (u,v) = 48
+       vertices "cubeVertices"
+         input POSITION "cubeVerticesSource"
+       triangles
+         material "cubeTexture"
+         input VERTEX "cubeVertices"
+         input NORMAL "cubeNormalsSource"
+         input TEXCOORD "cubeTextureUVsSource"
+         36 (shared) indices
+
+   scene "cubeScene"
+     node "cube"
+       geometry "cubeGeometry"
+       bind_material "cubeTexture" -> "matTexture"
+
+ -->
+<asset>
+ <contributor>
+  <authoring_tool>Text editor</authoring_tool>
+ </contributor>
+ <unit meter="1.000000"/>
+ <up_axis>Z_UP</up_axis>
+</asset>
+
+<library_images>
+ <image id="texturePNG">
+  <init_from>cube-tex.png</init_from>
+ </image>
+</library_images>
+
+<library_effects>
+ <effect id="effectTexture">
+  <profile_COMMON>
+   <newparam sid="textureSurface">
+    <surface type="2D">
+     <init_from>texturePNG</init_from>
+    </surface>
+   </newparam>
+   <newparam sid="textureSampler">
+    <sampler2D>
+     <source>textureSurface</source>
+    </sampler2D>
+   </newparam>
+   <technique sid="common">
+    <lambert>
+     <emission>
+      <color sid="emission">0 0 0 1</color>
+     </emission>
+     <diffuse>
+      <texture texture="textureSampler" texcoord="UVMap"/>
+     </diffuse>
+     <index_of_refraction>
+      <float sid="ior">1.5</float>
+     </index_of_refraction>
+    </lambert>
+   </technique>
+  </profile_COMMON>
+ </effect>
+</library_effects>
+
+<library_materials>
+ <material id="matTexture" name="MatTexture">
+  <instance_effect url="#effectTexture"/>
+ </material>
+</library_materials>
+
+<library_geometries>
+ <geometry id="cubeGeometry" name="CubeGeometry">
+  <mesh>
+
+   <!--
+    Vertices:                        Faces:
+         f- - - -g                          +- - - -+ 
+        /.      /|                         /.  5   /|  3 back
+       / .     / |                        / .     / |
+      e- - - -h  |                   2   +- - - -+ 1|
+      |  b . .|. c      z          right |  . . .|. +
+      | .     | /       | /y             | . 4   | /
+      |.      |/        |/               |.      |/
+      a- - - -d         + - - x          +- - - -+
+                                              6
+                                           bottom
+    -->
+
+   <!--
+    Vertex data:
+    
+    8 vertices
+     * 3 copies of each vertex (one for each face it is part of because
+         this needs to be kept in sync with normal and texture arrays)
+    = 24 vertices
+     
+     * 3 values (x,y,z) for each vertex
+    = 72 values
+    -->
+   <source id="cubeVerticesSource">
+    <float_array id="cubeVerticesData" count="72">
+     0 0 0  <!-- 0 a (faces: 2,4,6) -->
+     0 0 0
+     0 0 0
+     0 1 0  <!-- 3 b (faces: 2,3,6) -->
+     0 1 0
+     0 1 0
+     1 1 0  <!-- 6 c (faces: 1,3,6) -->
+     1 1 0
+     1 1 0
+     1 0 0  <!-- 9 d (faces: 1,4,6) -->
+     1 0 0
+     1 0 0
+     0 0 1  <!-- 12 e (faces: 2,4,5) -->
+     0 0 1
+     0 0 1
+     0 1 1  <!-- 15 f (faces: 2,3,5) -->
+     0 1 1
+     0 1 1
+     1 1 1  <!-- 18 g (faces: 1,3,5) -->
+     1 1 1
+     1 1 1
+     1 0 1  <!-- 21 h (faces: 1,4,5) -->
+     1 0 1
+     1 0 1
+    </float_array>
+    <technique_common>
+     <accessor source="#cubeVerticesData" count="24" stride="3">
+      <param name="X" type="float"/>
+      <param name="Y" type="float"/>
+      <param name="Z" type="float"/>
+     </accessor>
+    </technique_common>
+   </source>
+
+   <!--
+    Normal data: Must correspond 1-for-1 with Vertex data.
+    -->
+   <source id="cubeNormalsSource">
+    <float_array id="cubeNormalsData" count="72">
+     -1  0  0  <!-- 0 a (faces: 2,4,6) -->
+      0 -1  0
+      0  0 -1
+     -1  0  0  <!-- 3 b (faces: 2,3,6) -->
+      0  1  0
+      0  0 -1
+      1  0  0  <!-- 6 c (faces: 1,3,6) -->
+      0  1  0
+      0  0 -1
+      1  0  0  <!-- 9 d (faces: 1,4,6) -->
+      0 -1  0
+      0  0 -1
+     -1  0  0  <!-- 12 e (faces: 2,4,5) -->
+      0 -1  0
+      0  0  1
+     -1  0  0  <!-- 15 f (faces: 2,3,5) -->
+      0  1  0
+      0  0  1
+      1  0  0  <!-- 18 g (faces: 1,3,5) -->
+      0  1  0
+      0  0  1
+      1  0  0  <!-- 21 h (faces: 1,4,5) -->
+      0 -1  0
+      0  0  1
+    </float_array>
+    <technique_common>
+     <accessor source="#cubeNormalsData" count="24" stride="3">
+      <param name="nX" type="float"/>
+      <param name="nY" type="float"/>
+      <param name="nZ" type="float"/>
+     </accessor>
+    </technique_common>
+   </source>
+
+   <!--
+    Texture UV data: Must correspond 1-for-1 with Vertex data.
+    24 vertices with 2 values per vertex
+    
+      +- -f- -g- -+- -+
+      |   | 5 |   |   |
+      f- -e- -h- -g- -+
+      | 2 | 4 | 1 |   |     v
+      b- -a- -d- -c- -+     |
+      |   | 6 |   |   |     |
+      +- -b- -c- -+- -+     + - - u
+      |   | 3 |   |   |
+      +- -f- -g- -+- -+
+    -->
+   <source id="cubeTextureUVsSource">
+    <float_array id="cubeTextureUVsData" count="48">
+     0.25 0.50  <!-- 0 a (faces: 2,4,6) -->
+     0.25 0.50
+     0.25 0.50
+     0    0.50  <!-- 3 b (faces: 2,3,6) -->
+     0.25 0.25
+     0.25 0.25
+     0.75 0.50  <!-- 6 c (faces: 1,3,6) -->
+     0.50 0.25
+     0.50 0.25
+     0.50 0.50  <!-- 9 d (faces: 1,4,6) -->
+     0.50 0.50
+     0.50 0.50
+     0.25 0.75  <!-- 12 e (faces: 2,4,5) -->
+     0.25 0.75
+     0.25 0.75
+     0    0.75  <!-- 15 f (faces: 2,3,5) -->
+     0.25 0
+     0.25 1.00
+     0.75 0.75  <!-- 18 g (faces: 1,3,5) -->
+     0.50 0
+     0.50 1.00
+     0.50 0.75  <!-- 21 h (faces: 1,4,5) -->
+     0.50 0.75
+     0.50 0.75
+    </float_array>
+    <technique_common>
+     <accessor source="#cubeTextureUVsData" count="24" stride="2">
+      <param name="U" type="float"/>
+      <param name="V" type="float"/>
+     </accessor>
+    </technique_common>
+   </source>
+
+   <vertices id="cubeVertices">
+    <input semantic="POSITION" source="#cubeVerticesSource"/>
+   </vertices>
+
+   <!--
+      3- - - -2
+      | -     |
+      |   #   |  Each face = 2 triangles (ccw)
+      |     - |            = 1-2-3 + 1-3-4
+      4- - - -1
+
+    Each index in the triangles array in an index into each of the
+    3 arrays (vertex, normal, uv).
+    The same index is used for each array because offset="0"
+    -->
+    
+   <triangles count="12" material="cubeTexture">
+    <input semantic="VERTEX" offset="0" source="#cubeVertices"/>
+    <input semantic="NORMAL" offset="0" source="#cubeNormalsSource"/>
+    <input semantic="TEXCOORD" offset="0" source="#cubeTextureUVsSource"/>
+    <p>
+     <!-- Face 1: cghd = cgh + chd -->
+     6 18 21
+     6 21 9
+     <!-- Face 2: aefb = aef + afb -->
+     0 12 15
+     0 15 3
+     <!-- Face 3: gcbf = gcb + gbf -->
+     19 7 4
+     19 4 16
+     <!-- Face 4: dhea = dhe + dea -->
+     10 22 13
+     10 13 1
+     <!-- Face 5: hgfe = hgf + hfe -->
+     23 20 17
+     23 17 14
+     <!-- Face 6: cdab = cda + cab -->
+     8 11 2
+     8 2 5
+    </p>
+   </triangles>
+
+  </mesh>
+ </geometry>
+</library_geometries>
+
+<library_visual_scenes>
+ <visual_scene id="cubeScene">
+  <node id="cube" name="Cube">
+   <instance_geometry url="#cubeGeometry">
+    <bind_material>
+     <technique_common>
+      <instance_material symbol="cubeTexture" target="#matTexture"/>
+     </technique_common>
+    </bind_material>
+   </instance_geometry>
+  </node>
+ </visual_scene>
+</library_visual_scenes>
+
+<scene>
+ <instance_visual_scene url="#cubeScene"/>
+</scene>
+
+</COLLADA>
