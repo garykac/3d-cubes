@@ -14,7 +14,6 @@ Files were tested by importing into Blender 2.8.
 The Wavefront .obj file format supports vertices, normals and texture coordinates
 (and more advanced features not used here).
 Material info is stored in a separate .mtl file: [cube.mtl](cube.mtl)
-(Note: materials are not automatically loaded by Blender)
 
 ## STL
 

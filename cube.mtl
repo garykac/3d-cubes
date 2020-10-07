@@ -1,4 +1,4 @@
-newmtl cube
+newmtl texture
 Ka 0.0 0.0 0.0
 Kd 0.5 0.5 0.5
 Ks 0.0 0.0 0.0
