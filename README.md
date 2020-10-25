@@ -9,10 +9,14 @@ Files were tested by importing into Blender 2.8.
 
 ## Wavefront .obj
 
-[cube.obj](cube.obj)
+[cube.obj](cube.obj), [cube-tex.obj](cube-tex.obj)
 
 The Wavefront .obj file format supports vertices, normals and texture coordinates
 (and more advanced features not used here).
+
+[cube.obj](cube.obj) is a basic cube with no texture.
+
+[cube-tex.obj](cube-tex.obj) is a basic cube with a texture material.
 Material info is stored in a separate .mtl file: [cube.mtl](cube.mtl)
 
 ## STL
