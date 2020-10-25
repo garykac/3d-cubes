@@ -27,19 +27,22 @@ STL files only store vertices and normals.
 
 ## Collada
 
-[cube.dae](cube.dae),  [cube2.dae](cube2.dae)
+[cube.dae](cube.dae),  [cube-tex.dae](cube-tex.dae),  [cube-tex2.dae](cube-tex2.dae)
 
 Collada files can store entire scenes and animations and provide many ways of specifying the data.
 
-In [cube.dae](cube.dae), the vertex, normal and uv arrays are aligned and are all the same length.
+In [cube.dae](cube.dae), the vertex and normal arrays are aligned and are both the same length.
 This allows the same index to be used for each array when defining triangles, but it also
 means that some of the vertex, normal and uv data needs to be duplicated.
 
-In [cube2.dae](cube2.dae), each vertex, normal and uv value is stored only once.
+In [cube-tex.dae](cube-tex.dae), the arrays are in parallel like cube.dae, but this version adds
+a uv array and a texture reference.
+
+In [cube-tex2.dae](cube-tex2.dae), each vertex, normal and uv value is stored only once.
 But this means that when defining triangles, a separate index needs to be provided for each array.
 
 # Textures
 
 The following texture is used to map the cubes.
 
-![Cube texture](cube-tex.png)
+![Cube texture](texture.png)
