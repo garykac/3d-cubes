@@ -4,4 +4,4 @@ Kd 0.5 0.5 0.5
 Ks 0.0 0.0 0.0
 Ns 10.0
 illum 2
-map_Kd cube-tex.png
+map_Kd texture.png
